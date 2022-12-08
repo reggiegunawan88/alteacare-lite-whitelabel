@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # Check for npm updates on daily
+    target-branch: "develop"
+    # Labels on pull requests for version updates only
+    labels:
+      - "npm dependencies"

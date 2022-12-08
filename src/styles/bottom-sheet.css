@@ -1,0 +1,19 @@
+/* bottom sheet show/hide animation */
+
+.bottomsheet-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.bottomsheet-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 300ms;
+}
+.bottomsheet-exit {
+  opacity: 1;
+}
+.bottomsheet-exit-active {
+  opacity: 1;
+  transform: translateY(100%);
+  transition: transform 300ms;
+}

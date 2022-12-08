@@ -1,0 +1,1 @@
+Layouts for various static structure for every page. (SPA)

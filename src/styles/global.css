@@ -1,0 +1,101 @@
+@import './reusable.css';
+@import './bottom-sheet.css';
+@import './animation.css';
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+/* apply global styling (tailwind mode) */
+@layer base {
+  body {
+    @apply font-inter max-w-sm mx-auto;
+  }
+  /* thin */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 100;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-Thin.ttf') format('truetype');
+  }
+  /* extralight */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 200;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-ExtraLight.ttf') format('truetype');
+  }
+  /* light */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 300;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-Light.ttf') format('truetype');
+  }
+  /* normal */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-Regular.ttf') format('truetype');
+  }
+  /* medium */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-Medium.ttf') format('truetype');
+  }
+  /* semibold */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-SemiBold.ttf') format('truetype');
+  }
+  /* bold */
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/Inter/static/Inter-Bold.ttf') format('truetype');
+  }
+}
+
+/* remove scrollbar track */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* style input placeholder font */
+input,
+input::placeholder {
+  font: 14px sans-serif;
+  color: '#6B7588';
+}
+/* remove highlight click effect */
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* remove dropdown arrow on select */
+select {
+  /* for Firefox */
+  -moz-appearance: none;
+  /* for Chrome */
+  -webkit-appearance: none;
+}
+
+/* nprogress color bar */
+#nprogress .bar {
+  background: #61C7B5 !important;
+}

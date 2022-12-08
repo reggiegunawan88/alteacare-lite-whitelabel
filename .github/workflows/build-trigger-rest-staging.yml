@@ -1,0 +1,48 @@
+on:
+  push:
+    branches: [ release/**, hotfix/** ]
+
+name: Deploy "AlteaCare Lite Web App" to Staging Environment on Vercel
+
+jobs:
+  deploy:
+    name: Deploy "AlteaCare Lite Web App" to Staging Environment on Vercel
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create .env
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_NODE_ENV: staging
+          envkey_PORT: 8888
+          envkey_NEXT_PUBLIC_BASE_URL_APPOINTMENT_SERVICE: https://staging-services.alteacare.com/appointment
+          envkey_NEXT_PUBLIC_BASE_URL_USER_SERVICE: https://staging-services.alteacare.com/user
+          envkey_NEXT_PUBLIC_BASE_URL_SENDER_SERVICE: https://staging-services.alteacare.com/sender
+          envkey_NEXT_PUBLIC_BASE_URL_CMS_SERVICE: https://staging-services.alteacare.com/data
+          envkey_NEXT_PUBLIC_BASE_URL_MARKETING_SERVICE: https://staging-services.alteacare.com/marketing
+          envkey_NEXT_PUBLIC_BASE_URL_SOCKET_SERVICE: https://staging-services.alteacare.com/socket
+          envkey_NEXT_PUBLIC_BASE_URL_BILLING_SERVICE: https://staging-services.alteacare.com/billing
+          envkey_NEXT_PUBLIC_BASE_URL_FILE_SERVICE: https://staging-services.alteacare.com/file
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.ORG_ID }}
+          vercel-project-id: ${{ secrets.PROJECT_ID }}
+          alias-domains: staging-app.alteacare.com
+          working-directory: ./
+          scope: ${{ secrets.TEAM_ID }}
+          github-comment: false
+
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: 'deployment-information'
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_USERNAME: 'AlteaCare Bot'
+          SLACK_ICON: 'https://alteacare-assets.s3.ap-southeast-1.amazonaws.com/images/logo_48x48.png'
+          SLACK_FOOTER: 'AlteaCare Deployment Information'

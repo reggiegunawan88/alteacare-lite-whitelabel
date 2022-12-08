@@ -1,0 +1,47 @@
+/* reusable style for components */
+
+.bg-gradient-blue {
+  @apply bg-gradient-to-b from-white to-lightblue
+}
+.search-input {
+  @apply w-full bg-light-3 rounded-full outline-none text-dark-1
+}
+.input-form {
+  @apply p-4 w-full h-13 rounded border-default border-light-1 outline-none
+}
+
+/* CTA button custom styling */
+.btn-primary {
+  @apply py-3 font-bold text-white bg-main-primary rounded-md outline-none
+}
+.btn-primary-dashed {
+  @apply py-3 font-bold text-main-primary rounded-md border-default border-dashed border-main-primary
+}
+.btn-primary-border {
+  @apply py-1 font-medium text-main-primary rounded-md border-default border-main-primary
+}
+.btn-secondary {
+  @apply py-3 font-bold text-white bg-main-darker rounded-md
+}
+.btn-filter {
+  @apply p-2 m-1 text-sm font-medium text-main-darker rounded-full border-default border-main-darker outline-none
+}
+.btn-error {
+  @apply p-2 text-sm font-bold text-white rounded-md bg-error-3 outline-none
+}
+
+/* line break style */
+.line-break-2 {
+  max-width: 100%;
+  display: -webkit-box;
+  max-height: 3.2em;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.line-break-3 {
+  max-width: 100%;
+  display: -webkit-box;
+  max-height: 3.2em;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

@@ -1,0 +1,1 @@
+export const widgetType = ['SYMPTOM', 'SPECIALIZATION', 'SPECIALIZATION_WITH_SYMPTOM'];
