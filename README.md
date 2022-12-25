@@ -3,6 +3,9 @@
 <p align="center">
 <img src="https://play-lh.googleusercontent.com/mWfSds4Ql7ZZPX34ur2S6qz8KoSo_6aB8XSBlluffhY5w7mmBosFmnbNx8XnkY3ycQ"
 </p>
+ 
+ ## Description
+ This apps was made for "whitelabel" needs on Alteacare so we can sell our whitelabel product to several partners that are interested to collaborate with us. I was initiating the project tech stacks and almost 90% features are built and maintained by me as a front end engineer in Alteacare.
 
 ## Tech Stacks
 
