@@ -35,8 +35,8 @@ https://staging-app.alteacare.com/
 </p>
 
 ## Whitelabel Partner Example
-<p> align="center"> 
+<p align="center"> 
  <img width="378" alt="image" src="https://user-images.githubusercontent.com/44907916/209455857-e6eab142-7e3e-4610-9dcb-8e6e5998c204.png">
- </p>
+</p>
 
 
