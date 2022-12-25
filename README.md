@@ -18,7 +18,7 @@ https://staging-app.alteacare.com/
 
 # Apps Screenshoot
 
-<p float="left">
+<p float="center">
  <img width="364" alt="image" src="https://user-images.githubusercontent.com/44907916/209455636-420c164c-8c98-472e-a479-778f03d95227.png">
  <img width="357" alt="image" src="https://user-images.githubusercontent.com/44907916/209455651-e7d1cbef-a206-43a8-9e9e-10ed91f1e74c.png"> 
  <img width="368" alt="image" src="https://user-images.githubusercontent.com/44907916/209455656-d53ae8e8-b51e-476b-820d-a4b3ab5c3797.png">
