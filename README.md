@@ -34,4 +34,9 @@ https://staging-app.alteacare.com/
 <img width="360" alt="image" src="https://user-images.githubusercontent.com/44907916/209455813-9a0986b9-36ef-42d5-88e1-6918c3172b79.png">
 </p>
 
+## Whitelabel Partner Example
+<p> align="center"> 
+ <img width="378" alt="image" src="https://user-images.githubusercontent.com/44907916/209455857-e6eab142-7e3e-4610-9dcb-8e6e5998c204.png">
+ </p>
+
 
