@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 import { useDispatch } from 'react-redux';
 
+import getCookie from '@/helpers/cookie/getCookie';
 import useShallowEqualSelector from '@/helpers/useShallowEqualSelector';
 import getAppointmentDetail from '@/services/Appointment/Detail/getAppointmentDetail';
 import getRoomDetailData from '@/services/Appointment/Detail/getRoomDetail';
@@ -12,7 +12,7 @@ import { setAppointmentDetail } from '@/store/slices/Appointment/Detail';
 const useTeleconsultationDetail = id => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const token = parseCookies().alt_user_token;
+  const token = getCookie()?.alt_user_token;
   const { data } = useShallowEqualSelector({ name: 'appointmentData', states: ['data'] });
   const [loading, setLoading] = useState(true);
   const [loadingBtn, setLoadingBtn] = useState(false);

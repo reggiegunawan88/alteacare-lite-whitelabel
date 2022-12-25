@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 
+import getCookie from '@/helpers/cookie/getCookie';
 import getPaymentList from '@/services/Payment/getPaymentList';
 import payTeleconsultation from '@/services/Payment/payTeleconsultation';
 
 const usePaymentList = () => {
   const router = useRouter();
-  const userToken = parseCookies()?.alt_user_token;
+  const userToken = getCookie()?.alt_user_token;
   const [isLoading, setIsLoading] = useState(true);
   const [paymentList, setPaymentList] = useState([]);
   const { id } = router.query;

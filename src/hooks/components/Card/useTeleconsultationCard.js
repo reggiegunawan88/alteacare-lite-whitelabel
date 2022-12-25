@@ -1,7 +1,7 @@
-import { parseCookies } from 'nookies';
+import getCookie from '@/helpers/cookie/getCookie';
 
 const useTeleconsultationCard = ({ status, appointmentId, transactionData }) => {
-  const userToken = parseCookies()?.alt_user_token;
+  const userToken = getCookie()?.alt_user_token;
 
   const payment_url = transactionData?.payment_url?.replace(
     '&token={{REPLACE_THIS_TO_BEARER_USER}}',

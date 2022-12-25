@@ -138,19 +138,13 @@ const useDoctorList = ({ listDay }) => {
 
   return {
     doctorList,
-    data,
     selectedDay,
     availableDay,
     selectedDate,
-    currentIndexDay,
+    slider,
     elementRef,
-    setCurrentIndexDay,
-    slideDay,
-    progressiveFetchDoctorData,
-    setDay,
     setKeyword,
-    sliderRef,
-    slider
+    sliderRef
   };
 };
 

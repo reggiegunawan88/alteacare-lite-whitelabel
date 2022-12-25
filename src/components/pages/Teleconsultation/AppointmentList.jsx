@@ -2,11 +2,11 @@ import React from 'react';
 
 import dynamic from 'next/dynamic';
 
-import TeleconsultationCard from '@/components/Card/TeleconsultationCard';
+const TeleconsultationCard = dynamic(() => import('@/components/Card/TeleconsultationCard'));
 
-const AppointmentList = ({ data, elementRef }) => {
+const AppointmentList = ({ data, loading, elementRef }) => {
   // loading state
-  if (data?.loading) {
+  if (loading) {
     const TeleconsultationListLoader = dynamic(() =>
       import('@/components/SkeletonLoader/Teleconsultation/TeleconsultationListLoader')
     );

@@ -1,17 +1,25 @@
 /**
  *
- * @param url -> url string
+ * @param url -> request url string
  * @param method -> 'POST' or 'GET'
  * @param isPublic -> Boolean -> true if request is public
+ * @param userToken -> user token
+ * @param body -> body data request (optional)
+ * @param type -> determine request type is file or no (optional)
  */
-import { parseCookies, setCookie } from 'nookies';
 
-const BASE_API = process.env.NEXT_PUBLIC_BASE_URL_USER_SERVICE;
+// eslint-disable-next-line import/no-cycle
+import { generateRefreshToken } from '@/services/User/generateRefreshToken';
+
+import deleteCookie from './cookie/deleteCookie';
+import getCookie from './cookie/getCookie';
+import { setCookies } from './cookie/setCookie';
 
 const fetcher = fetchConfig => {
-  const { url, method, isPublic, body, type } = fetchConfig;
-  const refreshToken = parseCookies().alt_refresh_token;
-  const bearer = parseCookies().alt_user_token;
+  const { userToken, url, method, isPublic, body, type } = fetchConfig;
+  const refreshToken = getCookie()?.alt_refresh_token;
+  const bearer = getCookie()?.alt_user_token || userToken;
+
   // set req headers
   const headers = isPublic
     ? {}
@@ -21,7 +29,7 @@ const fetcher = fetchConfig => {
         Authorization: `Bearer ${bearer}`
       };
   // set req options and body
-  const options =
+  let options =
     method === 'POST'
       ? { method, headers, ...(type !== 'file' ? { body: JSON.stringify(body) } : { body }) }
       : {
@@ -44,45 +52,41 @@ const fetcher = fetchConfig => {
       // intercept 401 error (token invalid)
       if (e.status === 401) {
         if (refreshToken) {
-          // HIT API REFRESH TOKEN
-          fetch(`${BASE_API}/auth/refresh-token`, {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ refresh_token: refreshToken })
-          }) // change later
-            .then(resp => {
-              if (resp.ok) {
-                return resp.json();
-              }
-              return Promise.reject(resp);
-            })
-            .then(res => {
-              // set cookie to new token
-              setCookie(null, 'alt_user_token', res.data.access_token, {
-                secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging',
-                path: '/',
-                maxAge: 60 * 60 * 24 * 3
+          // HIT REFRESH TOKEN API
+          return new Promise(resolve => {
+            const result = generateRefreshToken({ body: { refresh_token: refreshToken } })
+              .then(res => {
+                // set cookie as new tokens
+                setCookies({ access_token: res?.access_token, refresh_token: res?.refresh_token });
+                // set new token to upcoming req header
+                options = {
+                  ...options,
+                  headers: {
+                    ...headers,
+                    Authorization: `Bearer ${res?.access_token}`
+                  }
+                };
+                return fetch(e?.url, options);
+              })
+              .then(resp => resp.json())
+              .catch(err => {
+                // throw user to auth page
+                deleteCookie();
+                window.location.href = process.env.NEXT_PUBLIC_BASE_URL_AUTHENTICATION || '';
+                return err;
               });
-              setCookie(null, 'alt_refresh_token', res.data.refresh_token, {
-                secure: process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging',
-                path: '/',
-                maxAge: 60 * 60 * 24 * 3
-              });
-              window.location.reload();
-            })
-            .catch(err => {
-              window.location.replace('https://alteacare.com');
-              return err;
-            });
+
+            resolve(result);
+          });
         }
-        return {}; // change to redirect home later
       }
       // return error response
-      return e.json().then(resp => {
-        return Promise.reject(resp);
+      return e?.json().then(resp => {
+        const errObj = {
+          ...resp,
+          code: e.status
+        };
+        return Promise.reject(errObj);
       });
     });
 };

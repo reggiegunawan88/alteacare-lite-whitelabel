@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { familyType } from '@/constants/familyType';
+import parseJwt from '@/helpers/parser/jwtParser';
 import parseRegionName from '@/helpers/parser/parseRegionName';
 import createPatient from '@/services/Patient/createPatient';
 import createPatientAddress from '@/services/Patient/createPatientAddress';
@@ -11,6 +13,7 @@ import getPatientList from '@/services/Patient/getPatientList';
 import getCountryList from '@/services/Regions/getCountryList';
 import getRegionData from '@/services/Regions/getRegionData';
 
+const jwt = parseJwt();
 const usePersonalDataForm = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -32,6 +35,7 @@ const usePersonalDataForm = () => {
     first_name: '',
     last_name: '',
     gender: '',
+    isDisable: false,
     contact_email: '',
     contact_phone: '',
     birth_date: '',
@@ -150,8 +154,10 @@ const usePersonalDataForm = () => {
 
   // create patient data after address id is obtained
   const handleCreatePatient = async () => {
+    const payload = form;
+    delete payload.isDisable;
     try {
-      await createPatient({ form }).then(() => {
+      await createPatient({ payload }).then(() => {
         // route to doctor detail page with doctor id
         router.push({ pathname: '/doctor/details', query: { id: router.query.id } });
       });
@@ -200,11 +206,41 @@ const usePersonalDataForm = () => {
         setSubdistrictValue(parseRegionName(data));
       }
     });
-    await getCountryList().then(resp => setCountries(resp.data));
+    await getCountryList().then(resp => {
+      setCountries(resp.data);
+    });
   };
 
   useEffect(() => {
     getInitialData();
+  }, []);
+
+  useEffect(() => {
+    if (jwt?.additionalData?.weplus_patient) {
+      getFamilyRelations().then(res => {
+        const relationJwt =
+          jwt?.additionalData?.weplus_patient?.family_relation?.replace(/[0-9]/g, '').toUpperCase() || '';
+        const relationType = res?.data?.filter(value => value.name === familyType[relationJwt]);
+        const fullName = jwt?.additionalData?.patient?.fullname || jwt?.additionalData?.weplus_patient?.name;
+        const gender = jwt?.additionalData?.patient?.gender || '';
+        const phone = jwt?.uniqueUserId || '';
+        const birthdate = jwt?.additionalData?.patient?.birth_date || '';
+        const cardId =
+          jwt?.additionalData?.patient?.card_id || `000000${jwt?.additionalData?.weplus_patient?.identification}`;
+        setFamilyRelations(relationType || null);
+        setForm({
+          ...form,
+          isDisable: true,
+          card_id: cardId || '',
+          birth_date: birthdate,
+          contact_phone: phone,
+          gender: gender || '',
+          first_name: fullName?.split(/ (.*)/, 2)?.[0] || '',
+          last_name: fullName?.split(/ (.*)/, 2)?.[1] || '',
+          family_relation_type: relationType?.[0]?.id || ''
+        });
+      });
+    }
   }, []);
 
   useEffect(() => {

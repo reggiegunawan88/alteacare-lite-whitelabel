@@ -1,10 +1,12 @@
 import React from 'react';
 
-import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import Div100vh from 'react-div-100vh';
 
 import DefaultLayout from '@/layouts/Default';
+
+const ChevronLeft = dynamic(() => import('@mui/icons-material/ChevronLeft'));
 
 const DocumentPreview = () => {
   const router = useRouter();

@@ -1,10 +1,12 @@
 import React from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import Symptoms from '@/components/Card/SymptomsCard';
 import useSearchSpecialistList from '@/hooks/pages/Search/useSearchSpecialistList';
 import SearchResultLayout from '@/layouts/SearchResult';
+
+const Symptoms = dynamic(() => import('@/components/Card/SymptomsCard'));
 
 const SpecialistSearch = () => {
   const { keyword, data } = useSearchSpecialistList();

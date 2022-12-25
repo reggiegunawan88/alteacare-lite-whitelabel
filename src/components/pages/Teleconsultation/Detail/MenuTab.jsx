@@ -1,12 +1,18 @@
 import React from 'react';
 
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const MenuTab = ({ activeTab, userId }) => {
+  const router = useRouter();
   return (
     <div className="w-full bg-white">
       <div className="flex overflow-x-auto flex-row pt-2 space-x-3 text-sm text-center whitespace-nowrap hide-scrollbar">
-        <Link passHref href={{ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'patient-data' } }}>
+        {/* patient data tab */}
+        <button
+          onClick={() =>
+            router.replace({ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'patient-data' } })
+          }
+        >
           <div
             className={`pb-1 px-1.5 ${
               activeTab === 'patient-data'
@@ -16,8 +22,13 @@ const MenuTab = ({ activeTab, userId }) => {
           >
             <span>Data Pasien</span>
           </div>
-        </Link>
-        <Link passHref href={{ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'doctor-notes' } }}>
+        </button>
+        {/* doctor notes tab */}
+        <button
+          onClick={() =>
+            router.replace({ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'doctor-notes' } })
+          }
+        >
           <div
             className={`pb-1 px-1.5 ${
               activeTab === 'doctor-notes'
@@ -27,10 +38,15 @@ const MenuTab = ({ activeTab, userId }) => {
           >
             <span>Catatan Dokter</span>
           </div>
-        </Link>
-        <Link
-          passHref
-          href={{ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'medical-document' } }}
+        </button>
+        {/* medical document tab */}
+        <button
+          onClick={() =>
+            router.replace({
+              pathname: '/teleconsultation/detail/[id]',
+              query: { id: userId, tab: 'medical-document' }
+            })
+          }
         >
           <div
             className={`pb-1 px-1.5 ${
@@ -41,8 +57,13 @@ const MenuTab = ({ activeTab, userId }) => {
           >
             <span>Dokumen Medis</span>
           </div>
-        </Link>
-        <Link passHref href={{ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'fee' } }}>
+        </button>
+        {/* teleconsultation fee tab */}
+        <button
+          onClick={() =>
+            router.replace({ pathname: '/teleconsultation/detail/[id]', query: { id: userId, tab: 'fee' } })
+          }
+        >
           <div
             className={`pb-1 px-1.5 ${
               activeTab === 'fee' ? 'font-semibold text-main-primary border-b-2 border-main-primary' : 'text-dark-2'
@@ -50,7 +71,7 @@ const MenuTab = ({ activeTab, userId }) => {
           >
             <span>Biaya</span>
           </div>
-        </Link>
+        </button>
       </div>
     </div>
   );

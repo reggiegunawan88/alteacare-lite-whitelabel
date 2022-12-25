@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -15,6 +14,7 @@ const PatientData = dynamic(() => import('@/components/pages/Teleconsultation/De
 const DoctorNotes = dynamic(() => import('@/components/pages/Teleconsultation/Detail/DoctorNotes'));
 const MedicalDocument = dynamic(() => import('@/components/pages/Teleconsultation/Detail/MedicalDocument'));
 const Fee = dynamic(() => import('@/components/pages/Teleconsultation/Detail/TeleconsultationFee'));
+const ChevronLeft = dynamic(() => import('@mui/icons-material/ChevronLeft'));
 
 const TeleconsultationDetail = () => {
   const router = useRouter();

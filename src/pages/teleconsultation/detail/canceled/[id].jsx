@@ -8,8 +8,8 @@ import Div100vh from 'react-div-100vh';
 import DoctorInfo from '@/components/Reusable/AppointmentInfo/DoctorInfo';
 import PatientInfo from '@/components/Reusable/AppointmentInfo/PatientInfo';
 import ScheduleInfo from '@/components/Reusable/AppointmentInfo/ScheduleInfo';
+import BackNavigation from '@/components/Reusable/BackNavigation';
 import useTeleconsultationDetail from '@/hooks/pages/Teleconsultation/Detail/useTeleconsultationDetail';
-import BackNavLayout from '@/layouts/BackNav';
 
 const TeleconsultationCanceled = () => {
   const router = useRouter();
@@ -31,31 +31,33 @@ const TeleconsultationCanceled = () => {
     );
   }
   return (
-    <div className="p-4 bg-light-4">
-      <div className="flex flex-col space-y-4">
-        <PatientInfo data={patient} isEditable={false} />
-        <DoctorInfo data={doctor} isEditable={false} />
-        <ScheduleInfo data={schedule} isEditable={false} />
+    <Div100vh className="flex flex-col">
+      <BackNavigation title="Masa Pembayaran Berakhir" />
+      <div className="overflow-auto flex-1">
+        <div className="p-4 bg-light-4">
+          <div className="flex flex-col space-y-4">
+            <PatientInfo data={patient} isEditable={false} />
+            <DoctorInfo data={doctor} isEditable={false} />
+            <ScheduleInfo data={schedule} isEditable={false} />
 
-        <div className="flex flex-col text-sm leading-4 text-center text-error-3">
-          <span>Maaf, masa pembayaran telekonsultasi berakhir.</span>
-          <span>Silakan jadwalkan ulang.</span>
-        </div>
-        {/* redirect this btn to doctor details with required params */}
-        <Link passHref href={`/doctor/details?id=${data?.results?.doctor?.id}`}>
-          <button className="w-full btn-primary">Jadwalkan Ulang</button>
-        </Link>
-        <div className="leading-3 text-center">
-          <span className="text-xs text-dark-3">
-            *Riwayat pembatalan telekonsultasi akan terhapus otomatis setelah 48 jam.
-          </span>
+            <div className="flex flex-col text-sm leading-4 text-center text-error-3">
+              <span>Maaf, masa pembayaran telekonsultasi berakhir.</span>
+              <span>Silakan jadwalkan ulang.</span>
+            </div>
+            {/* redirect this btn to doctor details with required params */}
+            <Link passHref href={`/doctor/details?id=${data?.results?.doctor?.id}`}>
+              <button className="w-full btn-primary">Jadwalkan Ulang</button>
+            </Link>
+            <div className="leading-3 text-center">
+              <span className="text-xs text-dark-3">
+                *Riwayat pembatalan telekonsultasi akan terhapus otomatis setelah 48 jam.
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </Div100vh>
   );
-};
-TeleconsultationCanceled.getLayout = page => {
-  return <BackNavLayout title="Masa Pembayaran Berakhir">{page}</BackNavLayout>;
 };
 
 export default TeleconsultationCanceled;

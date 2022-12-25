@@ -5,29 +5,21 @@ import { useRouter } from 'next/router';
 import { batch, useDispatch } from 'react-redux';
 
 import GetTodayDay from '@/helpers/day/day';
+import resizePlugin from '@/helpers/keen-slider/resizePlugin'; // !important
 import useBottomSheet from '@/hooks/components/BottomSheet/useBottomSheet';
-import useDoctorDetail from '@/hooks/pages/Doctor/DoctorDetail/useDoctorDetail';
 import { storeDoctorData, storeScheduleData } from '@/store/slices/Transaction';
 
 const useDoctorSchedule = ({ availableDay }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { openBottomSheet } = useBottomSheet();
-  const { timeSlots } = useDoctorDetail();
   const [isDefault, setIsDefault] = useState(true);
-  const [data] = useState(timeSlots || [...Array(4)]);
   const [selectedTime, setSelectedTime] = useState(null);
   const [activeTimeslotIdx, setActiveTimeslotIdx] = useState(null);
 
   // day slider state
   const [params, setParams] = useState([]); // date params
-  const curr = new Date();
-  const todayDate = curr.setDate(curr.getDate());
-  const dateString = new Date(todayDate).toISOString().slice(0, 10);
-  const dayQuery = router.query.day;
-  const dateQuery = router.query.date;
-  const [selectedDate, setSelectedDate] = useState(dateQuery || dateString);
-  const [selectedDay, setSelectedDay] = useState(dayQuery || GetTodayDay());
+  const [selectedDay, setSelectedDay] = useState(router.query?.day || GetTodayDay()); // assign day based on query param (if any) or today's day
   const indexOfCurrentDay = availableDay?.findIndex(dayList => dayList.day === selectedDay);
   const [currentIndexDay, setCurrentIndexDay] = useState(indexOfCurrentDay);
 
@@ -49,7 +41,6 @@ const useDoctorSchedule = ({ availableDay }) => {
     const currentParams = router.query;
     const newParams = { ...currentParams, date, day };
     setSelectedDay(day);
-    setSelectedDate(date);
     setParams(newParams);
 
     if (isDefault) {
@@ -73,20 +64,23 @@ const useDoctorSchedule = ({ availableDay }) => {
   };
 
   // custom keen slider hooks
-  const [sliderRef, slider] = useKeenSlider({
-    loop: false,
-    initial: currentIndexDay,
-    renderMode: 'performance',
-    slides: {
-      spacing: 8
+  const [sliderRef, slider] = useKeenSlider(
+    {
+      loop: false,
+      initial: currentIndexDay,
+      renderMode: 'performance',
+      slides: {
+        spacing: 8
+      },
+      slideChanged(s) {
+        const { rel } = s.track.details;
+        const sliderProps = { rel };
+        slideDay(sliderProps);
+        setCurrentIndexDay(currentIndexDay);
+      }
     },
-    slideChanged(s) {
-      const { rel } = s.track.details;
-      const sliderProps = { rel };
-      slideDay(sliderProps);
-      setCurrentIndexDay(currentIndexDay);
-    }
-  });
+    [resizePlugin] // must include this argument to prevent incorrect max-width on slider's element
+  );
 
   useEffect(() => {
     rerouting();
@@ -100,16 +94,11 @@ const useDoctorSchedule = ({ availableDay }) => {
   }, []);
 
   return {
-    data,
-    timeSlots,
     activeTimeslotIdx,
-    availableDay,
     selectedDay,
-    selectedDate,
     slider,
     selectSchedule,
     chooseSchedule,
-    setDay,
     sliderRef
   };
 };
