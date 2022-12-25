@@ -22,7 +22,7 @@ https://staging-app.alteacare.com/
 # Apps Screenshoot
 
 ## General apps theme
-<p float="left">
+<p align="center">
  <img width="360" alt="image" src="https://user-images.githubusercontent.com/44907916/209455636-420c164c-8c98-472e-a479-778f03d95227.png">
  
  <img width="360" alt="image" src="https://user-images.githubusercontent.com/44907916/209455651-e7d1cbef-a206-43a8-9e9e-10ed91f1e74c.png">
