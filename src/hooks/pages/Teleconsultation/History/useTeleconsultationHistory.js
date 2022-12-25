@@ -13,6 +13,7 @@ const useTeleconsultationHistory = () => {
   const router = useRouter();
   const { historyList } = useShallowEqualSelector({ name: 'appointmentList', states: ['historyList'] });
   const { elementRef, isLastIdx } = useIntersectionObserver();
+  const [loading, setLoading] = useState(true);
 
   // history appointment API param
   const [param, setParam] = useState({
@@ -44,14 +45,18 @@ const useTeleconsultationHistory = () => {
   // get data based on query param sort type value
   const conditionalDataFetch = async routerParam => {
     // contains no query params
+    setLoading(true);
     if (Object.keys(routerParam.query).length === 0) {
-      try {
-        await getHistoryAppointment({ param }).then(resp => {
+      getHistoryAppointment({ param })
+        .then(resp => {
           dispatch(setHistoryData(resp));
+        })
+        .catch(error => {
+          dispatch(setHistoryData(error));
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } catch (error) {
-        dispatch(setHistoryData(error));
-      }
     } else {
       // contains single or multiple query param filter value
       let queries = param;
@@ -62,13 +67,16 @@ const useTeleconsultationHistory = () => {
         };
         return true;
       });
-      try {
-        await getHistoryAppointment({ param: queries }).then(resp => {
+      getHistoryAppointment({ param: queries })
+        .then(resp => {
           dispatch(setHistoryData(resp));
+        })
+        .catch(error => {
+          dispatch(setHistoryData(error));
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } catch (error) {
-        dispatch(setHistoryData(error));
-      }
     }
   };
 
@@ -91,6 +99,7 @@ const useTeleconsultationHistory = () => {
   }, [isLastIdx]);
 
   return {
+    loading,
     historyList,
     elementRef,
     setKeyword

@@ -38,14 +38,11 @@ const MyApp = ({ Component, pageProps, router }) => {
     <>
       <Head>
         <title>AlteaCare - Lite</title>
-        <meta name="description" value="Alteacare Lite Web App" />
+        <meta name="description" content="Alteacare Lite Web App" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta property="og:type" content="website" />
         <meta charSet="UTF-8" key="charset" />
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
-        />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5" />
         <meta name="theme-color" content="#61C7B5" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" key="icon32" />

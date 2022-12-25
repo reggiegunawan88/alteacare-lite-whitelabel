@@ -1,15 +1,17 @@
 import React from 'react';
 
-import AppointmentList from '@/components/pages/Teleconsultation/AppointmentList';
-import Searchbar from '@/components/pages/Teleconsultation/Searchbar';
+import dynamic from 'next/dynamic';
+
 import useBottomSheet from '@/hooks/components/BottomSheet/useBottomSheet';
 import useTeleconsultationCancelled from '@/hooks/pages/Teleconsultation/Cancelled/useTeleconsultationCancelled';
-import HomeLayout from '@/layouts/Home';
 import TeleconsultationLayout from '@/layouts/Teleconsultation';
+
+const Searchbar = dynamic(() => import('@/components/pages/Teleconsultation/Searchbar'));
+const AppointmentList = dynamic(() => import('@/components/pages/Teleconsultation/AppointmentList'));
 
 const ConsultationCancelled = () => {
   const { openBottomSheet } = useBottomSheet();
-  const { cancelledList, elementRef, setKeyword } = useTeleconsultationCancelled();
+  const { cancelledList, loading, elementRef, setKeyword } = useTeleconsultationCancelled();
 
   return (
     <>
@@ -20,17 +22,13 @@ const ConsultationCancelled = () => {
           setKeyword={setKeyword}
         />
       </div>
-      <AppointmentList data={cancelledList} elementRef={elementRef} />
+      <AppointmentList data={cancelledList} elementRef={elementRef} loading={loading} />
     </>
   );
 };
 
 ConsultationCancelled.getLayout = page => {
-  return (
-    <HomeLayout>
-      <TeleconsultationLayout>{page}</TeleconsultationLayout>
-    </HomeLayout>
-  );
+  return <TeleconsultationLayout>{page}</TeleconsultationLayout>;
 };
 
 export default ConsultationCancelled;

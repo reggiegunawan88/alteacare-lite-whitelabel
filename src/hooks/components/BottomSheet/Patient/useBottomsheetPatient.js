@@ -18,6 +18,7 @@ const useBottomsheetPatient = () => {
     idx: 0,
     isSelected: false
   });
+  const [loading, setLoading] = useState(true);
 
   // add patient list data and pass doctor id to form page
   const addPatient = () => {
@@ -74,14 +75,21 @@ const useBottomsheetPatient = () => {
   // fetch API data (repeat until total data is fetched)
   const fetchPatientData = () => {
     const result = [];
-    getPatientList({ page }).then(resp => {
-      const data = resp?.data?.patient;
-      if (data?.length > 0) {
-        result.push(...patientData, ...data);
-        setPatientData(result);
-        setPage(page + 1);
-      }
-    });
+    getPatientList({ page })
+      .then(resp => {
+        const data = resp?.data?.patient;
+        if (data?.length > 0) {
+          result.push(...patientData, ...data);
+          setPatientData(result);
+          setPage(page + 1);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   // search initial patient id if query param is exist
@@ -110,6 +118,7 @@ const useBottomsheetPatient = () => {
   }, [router.isReady, page]);
 
   return {
+    loading,
     patientData,
     selectedPatient,
     setPatientValue,

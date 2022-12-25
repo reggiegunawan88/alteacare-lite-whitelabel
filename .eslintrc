@@ -62,7 +62,21 @@
       }
     ],
     "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "unused-imports/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "import/no-cycle": [
+      "warn",
+      {
+        "maxDepth": 10,
+        "ignoreExternal": true
+      }
+    ],
+    // mui imports restriction
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ]
   },
   "plugins": ["react", "tailwindcss", "unused-imports"],
   "parserOptions": {

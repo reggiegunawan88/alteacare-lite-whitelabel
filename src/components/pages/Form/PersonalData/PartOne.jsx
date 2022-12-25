@@ -13,10 +13,11 @@ const PartOne = ({ form, familyRelations, familyMembers, handleInputChange }) =>
         <div className="relative">
           {familyMembers?.length > 0 ? (
             <select
-              className="input-form"
+              className={`input-form ${form.isDisable ? 'bg-light-2' : ''}`}
               name="family_relation_type"
               value={form?.family_relation_type}
-              onChange={handleInputChange}
+              disabled={form.isDisable}
+              onChange={!form?.isDisable ? handleInputChange : null}
             >
               <option value="" disabled>
                 Pilih hubungan
@@ -33,7 +34,7 @@ const PartOne = ({ form, familyRelations, familyMembers, handleInputChange }) =>
               name="family_relation_type"
               value={form?.family_relation_type}
               disabled
-              onChange={handleInputChange}
+              // onChange={handleInputChange}
             >
               {familyRelations?.map(item => (
                 <option key={item?.id} value={item?.id}>
@@ -52,11 +53,12 @@ const PartOne = ({ form, familyRelations, familyMembers, handleInputChange }) =>
         </span>
         <input
           type="text"
-          className="input-form"
+          className={`input-form ${form.isDisable ? 'bg-light-2' : ''}`}
           placeholder="Isi nama depan"
           name="first_name"
-          value={form.first_name}
-          onChange={handleInputChange}
+          value={form?.first_name}
+          disabled={form?.isDisable}
+          onChange={!form?.isDisable ? handleInputChange : null}
         />
       </div>
       {/* last name */}
@@ -66,11 +68,12 @@ const PartOne = ({ form, familyRelations, familyMembers, handleInputChange }) =>
         </span>
         <input
           type="text"
-          className="input-form"
+          disabled={form.isDisable}
+          className={`input-form ${form.isDisable ? 'bg-light-2' : ''}`}
           placeholder="Isi nama belakang"
           name="last_name"
           value={form.last_name}
-          onChange={handleInputChange}
+          onChange={!form?.isDisable ? handleInputChange : null}
         />
       </div>
       {/* whatsapp number */}

@@ -22,4 +22,4 @@ export const makeStore = () =>
   });
 
 // export an assembled wrapper
-export const wrapper = createWrapper(makeStore, { debug: true });
+export const wrapper = createWrapper(makeStore, { debug: process.env.APP_ENV === 'local' });

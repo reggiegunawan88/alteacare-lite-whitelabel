@@ -1,22 +1,20 @@
 import React from 'react';
 
-import AppointmentList from '@/components/pages/Teleconsultation/AppointmentList';
+import dynamic from 'next/dynamic';
+
 import useTeleconsultationOngoing from '@/hooks/pages/Teleconsultation/Ongoing/useTeleconsultationOngoing';
-import HomeLayout from '@/layouts/Home';
 import TeleconsultationLayout from '@/layouts/Teleconsultation';
 
-const ConsultationOngoing = () => {
-  const { ongoingList, elementRef } = useTeleconsultationOngoing();
+const AppointmentList = dynamic(() => import('@/components/pages/Teleconsultation/AppointmentList'));
 
-  return <AppointmentList data={ongoingList} elementRef={elementRef} />;
+const ConsultationOngoing = () => {
+  const { ongoingList, loading, elementRef } = useTeleconsultationOngoing();
+
+  return <AppointmentList data={ongoingList} elementRef={elementRef} loading={loading} />;
 };
 
 ConsultationOngoing.getLayout = page => {
-  return (
-    <HomeLayout>
-      <TeleconsultationLayout>{page}</TeleconsultationLayout>
-    </HomeLayout>
-  );
+  return <TeleconsultationLayout>{page}</TeleconsultationLayout>;
 };
 
 export default ConsultationOngoing;

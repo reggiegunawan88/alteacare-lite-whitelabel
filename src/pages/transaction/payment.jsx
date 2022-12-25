@@ -1,15 +1,17 @@
 import React from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import DoctorInfo from '@/components/Reusable/AppointmentInfo/DoctorInfo';
-import FeeInfo from '@/components/Reusable/AppointmentInfo/FeeInfo';
-import PatientInfo from '@/components/Reusable/AppointmentInfo/PatientInfo';
-import ScheduleInfo from '@/components/Reusable/AppointmentInfo/ScheduleInfo';
-import Spinner from '@/components/Reusable/Spinner';
 import useTransactionPayment from '@/hooks/pages/Transaction/Payment/useTransactionPayment';
 import TransactionLayout from '@/layouts/Transaction';
+
+const DoctorInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/DoctorInfo'));
+const FeeInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/FeeInfo'));
+const PatientInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/PatientInfo'));
+const ScheduleInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/ScheduleInfo'));
+const Spinner = dynamic(() => import('@/components/Reusable/Spinner'));
 
 const Payment = () => {
   const { data, loadingPage, loadingBtn, proceedPayment } = useTransactionPayment();
@@ -32,7 +34,7 @@ const Payment = () => {
       <PatientInfo data={data?.patient} isEditable={false} />
       <DoctorInfo data={data?.doctor} isEditable={false} />
       <ScheduleInfo data={data?.schedule} isEditable={false} />
-      <FeeInfo data={data} />
+      <FeeInfo showCoverage={true} data={data} />
       <div className="flex text-center">
         <span className="text-sm text-dark-1">
           Dengan mengklik “Lanjut” Anda menyetujui{' '}

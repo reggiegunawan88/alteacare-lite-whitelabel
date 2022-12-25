@@ -15,7 +15,13 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_NODE_ENV: development
+          envkey_APP_ENV: development
           envkey_PORT: 8888
+
+          # COOKIE DOMAIN
+          envkey_NEXT_PUBLIC_COOKIE_DOMAIN: dev-app.alteacare.com
+
+          # ALTEACARE SERVICES URL
           envkey_NEXT_PUBLIC_BASE_URL_APPOINTMENT_SERVICE: https://dev-services.alteacare.com/appointment
           envkey_NEXT_PUBLIC_BASE_URL_USER_SERVICE: https://dev-services.alteacare.com/user
           envkey_NEXT_PUBLIC_BASE_URL_SENDER_SERVICE: https://dev-services.alteacare.com/sender
@@ -24,6 +30,10 @@ jobs:
           envkey_NEXT_PUBLIC_BASE_URL_BILLING_SERVICE: https://dev-services.alteacare.com/billing
           envkey_NEXT_PUBLIC_BASE_URL_MARKETING_SERVICE: https://dev-services.alteacare.com/marketing
           envkey_NEXT_PUBLIC_BASE_URL_FILE_SERVICE: https://dev-services.alteacare.com/file
+
+          # MIDTRANS URL
+          envkey_NEXT_PUBLIC_MIDTRANS_SNAP_URL: https://app.sandbox.midtrans.com/snap/snap.js
+          envkey_NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.MIDTRANS_CLIENT_KEY_DEVELOPMENT }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20

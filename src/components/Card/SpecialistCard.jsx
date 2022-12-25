@@ -7,7 +7,7 @@ const SpecialistCard = props => {
   const { name, image, icon, symptoms } = props.data;
   const { query } = props;
   return (
-    <Link passHref={true} href={`/doctor/list?${query}`}>
+    <Link passHref={true} prefetch={false} href={`/doctor/list?${query}`}>
       <div
         className="flex flex-col shrink-0 items-center py-2 px-3 my-1 space-y-1 w-fit bg-white rounded-md shadow-md"
         style={{ height: 100, width: 180 }}

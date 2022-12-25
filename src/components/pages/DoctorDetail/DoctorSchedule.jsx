@@ -77,7 +77,7 @@ const DoctorSchedule = props => {
           disabled={activeTimeslotIdx === null}
           onClick={() => chooseSchedule(doctorData)}
         >
-          <p className="font-bold">Lanjut</p>
+          <span className="font-bold">Lanjut</span>
         </button>
       </div>
     </div>

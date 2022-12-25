@@ -5,11 +5,11 @@ import dynamic from 'next/dynamic';
 import Div100vh from 'react-div-100vh';
 
 import FormPartOne from '@/components/pages/Form/PersonalData/PartOne';
-import FormPartTwo from '@/components/pages/Form/PersonalData/PartTwo';
 import usePersonalDataForm from '@/hooks/components/Form/usePersonalDataForm';
 
 // dynamic import
 const ErrorBanner = dynamic(() => import('@/components/Reusable/ErrorBanner'));
+const FormPartTwo = dynamic(() => import('@/components/pages/Form/PersonalData/PartTwo'));
 
 const PersonalDataFormOne = () => {
   const {

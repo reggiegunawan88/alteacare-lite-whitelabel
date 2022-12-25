@@ -4,8 +4,7 @@ import Image from 'next/image';
 
 const DoctorDetail = ({ data }) => {
   return (
-    // eslint-disable-next-line tailwindcss/no-custom-classname
-    <div className="flex flex-col space-y-2 leading-4 keen-slider__slide">
+    <div className="flex flex-col space-y-2 leading-4">
       <div className="flex flex-col space-y-1 text-sm">
         <span className="font-semibold">{data?.name}</span>
         <span className="font-semibold text-info-2">Spesialis {data?.specialization?.name}</span>

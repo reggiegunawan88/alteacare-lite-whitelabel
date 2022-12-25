@@ -14,8 +14,14 @@ jobs:
       - name: Create .env
         uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_NODE_ENV: staging
+          envkey_NODE_ENV: development
+          envkey_APP_ENV: staging
           envkey_PORT: 8888
+
+          # COOKIE DOMAIN
+          envkey_NEXT_PUBLIC_COOKIE_DOMAIN: staging-app.alteacare.com
+
+          # ALTEACARE SERVICES URL
           envkey_NEXT_PUBLIC_BASE_URL_APPOINTMENT_SERVICE: https://staging-services.alteacare.com/appointment
           envkey_NEXT_PUBLIC_BASE_URL_USER_SERVICE: https://staging-services.alteacare.com/user
           envkey_NEXT_PUBLIC_BASE_URL_SENDER_SERVICE: https://staging-services.alteacare.com/sender
@@ -24,6 +30,10 @@ jobs:
           envkey_NEXT_PUBLIC_BASE_URL_SOCKET_SERVICE: https://staging-services.alteacare.com/socket
           envkey_NEXT_PUBLIC_BASE_URL_BILLING_SERVICE: https://staging-services.alteacare.com/billing
           envkey_NEXT_PUBLIC_BASE_URL_FILE_SERVICE: https://staging-services.alteacare.com/file
+
+          # MIDTRANS URL
+          envkey_NEXT_PUBLIC_MIDTRANS_SNAP_URL: https://app.sandbox.midtrans.com/snap/snap.js
+          envkey_NEXT_PUBLIC_MIDTRANS_CLIENT_KEY: ${{ secrets.MIDTRANS_CLIENT_KEY_STAGING }}
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v20

@@ -26,10 +26,11 @@ const PartTwo = ({
         </span>
         <div className="relative">
           <select
-            className="input-form"
+            className={`input-form ${form.isDisable ? 'bg-light-2' : ''}`}
             placeholder="Pilih jenis kelamin"
             name="gender"
-            onChange={handleInputChange}
+            disabled={form.isDisable}
+            onChange={!form?.isDisable ? handleInputChange : null}
             value={form.gender}
           >
             <option disabled value="">
@@ -51,7 +52,8 @@ const PartTwo = ({
           className="input-form"
           name="birth_date"
           value={form?.birth_date}
-          onChange={handleInputChange}
+          disabled={form.isDisable}
+          onChange={!form?.isDisable ? handleInputChange : null}
         />
       </div>
       {/* birth country */}
@@ -113,11 +115,12 @@ const PartTwo = ({
         </span>
         <input
           type="text"
-          className="input-form"
+          className={`input-form ${form.isDisable ? 'bg-light-2' : ''}`}
           placeholder="Masukkan nomor KTP (angka saja)"
           name="card_id"
           value={form?.card_id}
-          onChange={handleInputChange}
+          disabled={form.isDisable}
+          onChange={!form?.isDisable ? handleInputChange : null}
         />
       </div>
       {/* address street */}

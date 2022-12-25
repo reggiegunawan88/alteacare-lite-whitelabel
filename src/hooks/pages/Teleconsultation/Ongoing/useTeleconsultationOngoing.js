@@ -13,6 +13,7 @@ const useTeleconsultationOngoing = () => {
   const router = useRouter();
   const { ongoingList } = useShallowEqualSelector({ name: 'appointmentList', states: ['ongoingList'] });
   const { elementRef, isLastIdx } = useIntersectionObserver();
+  const [loading, setLoading] = useState(true);
 
   // ongoing appointment API param
   const [param, setParam] = useState({
@@ -35,13 +36,17 @@ const useTeleconsultationOngoing = () => {
   };
 
   const getInitialData = async () => {
-    try {
-      await getOngoingAppointment({ param }).then(resp => {
+    setLoading(true);
+    getOngoingAppointment({ param })
+      .then(resp => {
         dispatch(setOngoingData(resp));
+      })
+      .catch(error => {
+        dispatch(setOngoingData(error));
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    } catch (error) {
-      dispatch(setOngoingData(error));
-    }
   };
 
   useEffect(() => {
@@ -59,6 +64,7 @@ const useTeleconsultationOngoing = () => {
   }, [router.isReady]);
 
   return {
+    loading,
     ongoingList,
     elementRef,
     progressiveFetchData

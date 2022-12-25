@@ -13,6 +13,7 @@ const useTeleconsultationCancelled = () => {
   const router = useRouter();
   const { cancelledList } = useShallowEqualSelector({ name: 'appointmentList', states: ['cancelledList'] });
   const { elementRef, isLastIdx } = useIntersectionObserver();
+  const [loading, setLoading] = useState(true);
 
   // canceled appointment API param
   const [param, setParam] = useState({
@@ -46,13 +47,16 @@ const useTeleconsultationCancelled = () => {
   const conditionalDataFetch = async routerParam => {
     // contains no query params
     if (Object.keys(routerParam.query).length === 0) {
-      try {
-        await getCancelledAppointment({ param }).then(resp => {
+      getCancelledAppointment({ param })
+        .then(resp => {
           dispatch(setCancelledData(resp));
+        })
+        .catch(error => {
+          dispatch(setCancelledData(error));
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } catch (error) {
-        dispatch(setCancelledData(error));
-      }
     } else {
       // contains single or multiple query param filter value
       let queries = param;
@@ -63,13 +67,16 @@ const useTeleconsultationCancelled = () => {
         };
         return true;
       });
-      try {
-        await getCancelledAppointment({ param: queries }).then(resp => {
+      getCancelledAppointment({ param: queries })
+        .then(resp => {
           dispatch(setCancelledData(resp));
+        })
+        .catch(error => {
+          dispatch(setCancelledData(error));
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      } catch (error) {
-        dispatch(setCancelledData(error));
-      }
     }
   };
 
@@ -92,6 +99,7 @@ const useTeleconsultationCancelled = () => {
   }, [isLastIdx]);
 
   return {
+    loading,
     cancelledList,
     elementRef,
     setKeyword

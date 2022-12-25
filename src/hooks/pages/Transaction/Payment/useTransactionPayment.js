@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 
+import getCookie from '@/helpers/cookie/getCookie';
 import getAppointmentDetail from '@/services/Appointment/Detail/getAppointmentDetail';
 import payTeleconsultation from '@/services/Payment/payTeleconsultation';
 
 const useTransactionPayment = () => {
   const router = useRouter();
-  const userToken = parseCookies()?.alt_user_token;
+  const userToken = getCookie()?.alt_refresh_token;
   const { id } = router.query;
   const [loadingPage, setLoadingPage] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);

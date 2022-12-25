@@ -17,6 +17,20 @@ const Snackbar = () => {
     states: ['isOpen', 'title', 'description', 'type']
   });
 
+  const renderSnackbarBorder = () => {
+    switch (type) {
+      case 'SUCCESS':
+        return 'border-success-4';
+      case 'ERROR':
+        return 'border-error-4';
+      case 'WARNING':
+        return 'border-warning-4';
+      default:
+        break;
+    }
+    return 'border-white';
+  };
+
   return (
     <div>
       <CSSTransition
@@ -27,17 +41,19 @@ const Snackbar = () => {
         onEnter={() => dispatch(showSnackbar())}
         onExited={() => dispatch(hideSnackbar())}
       >
-        <div className="absolute inset-x-0 top-3 z-10 p-5 mx-auto w-fit bg-white rounded-lg shadow-md">
+        <div
+          className={`absolute inset-x-0 top-3 z-10 p-5 mx-2 w-fit bg-white rounded-lg shadow-md text-dark-2 border-default ${renderSnackbarBorder()}`}
+        >
           <div className="flex flex-row items-start space-x-4">
-            {type === 'success' && <CheckCircleIcon className="w-5 text-success-2" />}
-            {type === 'warning' && <WarningIcon className="w-5 text-warning-2" />}
-            {type === 'error' && <ErrorIcon className="w-5 text-error-2" />}
+            {type === 'SUCCESS' && <CheckCircleIcon className="w-5 text-success-2" />}
+            {type === 'WARNING' && <WarningIcon className="w-5 text-warning-2" />}
+            {type === 'ERROR' && <ErrorIcon className="w-5 text-error-2" />}
             <div className="flex flex-col space-y-1 text-sm">
-              <span className="text-dark-2">{title}</span>
-              <span className="text-dark-2">{description}</span>
+              {title && <span>{title}</span>}
+              <span>{description}</span>
             </div>
             <button>
-              <CloseIcon className="w-5 font-bold text-dark-3" onClick={() => dispatch(hideSnackbar())} />
+              <CloseIcon className="w-5 font-bold" onClick={() => dispatch(hideSnackbar())} />
             </button>
           </div>
         </div>

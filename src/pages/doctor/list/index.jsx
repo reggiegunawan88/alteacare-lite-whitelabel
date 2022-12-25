@@ -2,25 +2,18 @@ import React from 'react';
 
 import dynamic from 'next/dynamic';
 
-import DoctorCard from '@/components/Card/DoctorCard';
 import DateSelector from '@/components/DateSelector';
+import withDoctorListSSR from '@/components/HOC/SSR/withDoctorListSSR';
 import Searchbar from '@/components/pages/DoctorList/Searchbar';
-import paramGenerator from '@/helpers/paramGenerate';
 import useBottomSheet from '@/hooks/components/BottomSheet/useBottomSheet';
 import useDoctorList from '@/hooks/pages/Doctor/DoctorList/useDoctorList';
 import DefaultLayout from '@/layouts/Default';
-import getAvailableDay from '@/services/Doctor/getAvailableDay';
-import getDoctorList from '@/services/Doctor/getDoctorList';
-import getSpecializationsList from '@/services/Doctor/getSpecializations';
-import getHospitalList from '@/services/Hospital/getHospitalList';
-import { wrapper } from '@/store';
-import { setDoctorData } from '@/store/slices/Doctor/List';
-import { initiateHospitalList, initiateSpecializationsList } from '@/store/slices/FilterList';
 import 'keen-slider/keen-slider.min.css';
 
 // dynamic import
 const EmptyState = dynamic(() => import('@/components/pages/DoctorList/EmptyState'));
 const LoadingState = dynamic(() => import('@/components/pages/DoctorList/LoadingState'));
+const DoctorCard = dynamic(() => import('@/components/Card/DoctorCard'));
 
 const DoctorList = props => {
   const { openBottomSheet } = useBottomSheet();
@@ -74,20 +67,7 @@ DoctorList.getLayout = page => {
   return <DefaultLayout>{page}</DefaultLayout>;
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ctx => {
-  const queryParams = paramGenerator(ctx?.query);
-  const doctorList = await getDoctorList(queryParams);
-  const specializationsList = await getSpecializationsList();
-  const hospitalList = await getHospitalList();
-  const listDay = await getAvailableDay(ctx?.query);
-  // set data to redux
-  if (doctorList.length > 0) {
-    store.dispatch(setDoctorData(doctorList));
-  }
-  store.dispatch(initiateSpecializationsList(specializationsList));
-  store.dispatch(initiateHospitalList(hospitalList));
-  return {
-    props: { listDay }
-  };
+export const getServerSideProps = withDoctorListSSR(() => {
+  return { props: {} };
 });
 export default DoctorList;

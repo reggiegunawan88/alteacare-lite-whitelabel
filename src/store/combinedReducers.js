@@ -11,6 +11,7 @@ import FilterListSlicers from '@/store/slices/FilterList';
 import SnackbarSlicers from '@/store/slices/Snackbar';
 import TransactionSlicers from '@/store/slices/Transaction';
 import UserSlicers from '@/store/slices/User';
+import ThemeSlicers from '@/store/slices/Whitelabel/Theme';
 
 // combine all reducers
 const combinedReducer = combineReducers({
@@ -22,7 +23,8 @@ const combinedReducer = combineReducers({
   appointmentData: AppointmentDetailSlicers,
   doctorList: DoctorListSlicers,
   doctorDetail: DoctorDetailSlicers,
-  transaction: TransactionSlicers
+  transaction: TransactionSlicers,
+  whitelabelTheme: ThemeSlicers
 });
 
 export default combinedReducer;

@@ -1,7 +1,7 @@
-import { parseCookies } from 'nookies';
+import getCookie from '@/helpers/cookie/getCookie';
 
 const parseJwt = () => {
-  const token = parseCookies().alt_user_token;
+  const token = getCookie()?.alt_user_token;
   if (!token) {
     return;
   }

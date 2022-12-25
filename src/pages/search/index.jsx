@@ -1,9 +1,12 @@
 import React from 'react';
 
+import dynamic from 'next/dynamic';
+
 import Searchbar from '@/components/pages/Search/Searchbar';
-import SearchContent from '@/components/pages/Search/SearchContent';
 import useSearchContent from '@/hooks/components/Search/useSearchContent';
 import DefaultLayout from '@/layouts/Default';
+
+const SearchContent = dynamic(() => import('@/components/pages/Search/SearchContent'));
 
 const Search = () => {
   const { data, isDefault, isLoading, setKeyword, clearKeyword } = useSearchContent();

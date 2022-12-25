@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 const HomeNavigation = () => {
   const router = useRouter();
   return (
-    <div className="w-full bg-white rounded-t-xl">
+    <div className="w-full bg-white rounded-t-2xl shadow-inner">
       <div className="grid grid-cols-2 justify-items-center py-3 text-dark-3">
         <Link passHref href="/">
           <div className="flex flex-col items-center space-y-1">
@@ -28,7 +28,7 @@ const HomeNavigation = () => {
                 layout="fixed"
               />
             )}
-            <p className={`text-xxs ${router.pathname === '/' && 'text-main-primary'}`}>Beranda</p>
+            <span className={`text-xxs ${router.pathname === '/' && 'text-main-primary'}`}>Beranda</span>
           </div>
         </Link>
         <Link passHref href="/teleconsultation/ongoing">
@@ -53,9 +53,9 @@ const HomeNavigation = () => {
                 />
               </>
             )}
-            <p className={`text-xxs ${router.pathname.includes('teleconsultation') && 'text-main-primary'}`}>
+            <span className={`text-xxs ${router.pathname.includes('teleconsultation') && 'text-main-primary'}`}>
               Telekonsultasi Saya
-            </p>
+            </span>
           </div>
         </Link>
       </div>

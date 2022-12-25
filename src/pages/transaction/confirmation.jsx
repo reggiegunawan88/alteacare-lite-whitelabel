@@ -1,14 +1,16 @@
 import React from 'react';
 
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-import DoctorInfo from '@/components/Reusable/AppointmentInfo/DoctorInfo';
-import FeeInfo from '@/components/Reusable/AppointmentInfo/FeeInfo';
-import PatientInfo from '@/components/Reusable/AppointmentInfo/PatientInfo';
-import ScheduleInfo from '@/components/Reusable/AppointmentInfo/ScheduleInfo';
-import Spinner from '@/components/Reusable/Spinner';
 import useTransactionConfirmation from '@/hooks/pages/Transaction/Confirmation/useTransactionConfirmation';
 import TransactionLayout from '@/layouts/Transaction';
+
+const DoctorInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/DoctorInfo'));
+const FeeInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/FeeInfo'));
+const PatientInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/PatientInfo'));
+const ScheduleInfo = dynamic(() => import('@/components/Reusable/AppointmentInfo/ScheduleInfo'));
+const Spinner = dynamic(() => import('@/components/Reusable/Spinner'));
 
 const Confirmation = () => {
   const { patientData, doctorData, scheduleData, confirmTransaction, isLoading, isError } =
@@ -34,7 +36,7 @@ const Confirmation = () => {
       <PatientInfo data={patientData} isEditable={true} />
       <DoctorInfo data={doctorData} isEditable={true} />
       <ScheduleInfo data={scheduleData} isEditable={true} />
-      <FeeInfo data={doctorData} />
+      <FeeInfo showCoverage={false} data={doctorData} />
       <button onClick={confirmTransaction} className="mt-5 w-full btn-primary" disabled={isLoading}>
         {isLoading && <Spinner />}
         {isLoading ? 'Membuat Appointment ...' : 'Konfirmasi'}

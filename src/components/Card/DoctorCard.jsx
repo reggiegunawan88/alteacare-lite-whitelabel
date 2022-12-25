@@ -11,15 +11,16 @@ const DoctorCard = props => {
     <div className="flex relative flex-row space-x-2 bg-white rounded-lg shadow-md" ref={props.elementRef}>
       {/* img with hospital logo */}
       <div className="flex items-center">
-        <Image
-          alt="doctor"
-          src={data?.photo?.url ? data?.photo?.url : '/assets/images/empty_spesialis.svg'}
-          width={152}
-          height={152}
-          layout="fixed"
-          objectFit="contain"
-          loading="lazy"
-        />
+        <div className="relative" style={{ width: '152px', height: '152px' }}>
+          <Image
+            alt="doctor"
+            src={data?.photo?.url ? data?.photo?.url : '/assets/images/empty_spesialis.svg'}
+            width={152}
+            height={152}
+            objectFit="contain"
+            priority
+          />
+        </div>
       </div>
       <div className="absolute bottom-0 left-2">
         <Image
@@ -31,6 +32,7 @@ const DoctorCard = props => {
           layout="fixed"
           width={24}
           height={24}
+          quality={50}
           objectFit="contain"
           loading="lazy"
         />

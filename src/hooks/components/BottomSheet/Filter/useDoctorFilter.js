@@ -6,6 +6,7 @@ import { batch, useDispatch } from 'react-redux';
 import { offerFilter } from '@/constants/filter/offerFilter';
 import { priceFilter } from '@/constants/filter/priceFilter';
 import filterParamGenerator from '@/helpers/paramGenerate';
+import parseJwt from '@/helpers/parser/jwtParser';
 import useShallowEqualSelector from '@/helpers/useShallowEqualSelector';
 import getSpecializationsList from '@/services/Doctor/getSpecializations';
 import getHospitalList from '@/services/Hospital/getHospitalList';
@@ -172,6 +173,10 @@ const useDoctorFilter = () => {
   };
 
   const resetFilters = async () => {
+    const jwt = parseJwt();
+    if (jwt?.additionalData?.filterdoctor) {
+      router.replace({ query: `specializations[]=${jwt?.additionalData?.filterdoctor}` });
+    }
     // hit API to get initial data
     setReset(true);
     const specializationsResp = await getSpecializationsList();

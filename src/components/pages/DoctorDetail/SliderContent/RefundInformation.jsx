@@ -5,8 +5,7 @@ import useDoctorInformation from '@/hooks/components/DoctorDetail/useDoctorInfor
 const RefundInformation = ({ refundTerms }) => {
   const { openRefundTermsBottomSheet } = useDoctorInformation();
   return (
-    // eslint-disable-next-line tailwindcss/no-custom-classname
-    <div className="flex flex-col space-y-3 text-xs leading-4 keen-slider__slide">
+    <div className="flex flex-col space-y-3 text-xs leading-4">
       <div className="flex">
         <span className="font-bold">Ketentuan Pengembalian Dana &amp; Pembatalan</span>
       </div>
